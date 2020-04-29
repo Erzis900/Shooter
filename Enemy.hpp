@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Helpers.hpp"
 #include <random>
 
 class Enemy : public sf::Drawable, public sf::Transformable {
@@ -7,10 +7,10 @@ public:
 	Enemy();
 	bool load(const std::string& tileset_dir);
 	void setRandomPos(sf::RenderWindow& window);
-	void updatePos(sf::Vector2f& player_pos);
-	bool isColliding(sf::Vector2f& projectile_pos);
+	void updatePos(sf::Vector2f player_pos);
+	bool isColliding(sf::Vector2f projectile_pos);
 
-	sf::Vector2f& get_pos() {
+	sf::Vector2f get_pos() {
 		return pos;
 	}
 
@@ -18,7 +18,7 @@ public:
 		alive = state;
 	}
 
-	bool& isAlive() {
+	bool isAlive() {
 		return alive;
 	}
 private:

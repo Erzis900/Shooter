@@ -10,15 +10,7 @@ bool Enemy::load(const std::string& tileset_dir) {
 	m_vertices.setPrimitiveType(sf::Quads);
 	m_vertices.resize(4);
 
-	m_vertices[0] = sf::Vector2f(0, 0);
-	m_vertices[1] = sf::Vector2f(size, 0.f);
-	m_vertices[2] = sf::Vector2f(size, size);
-	m_vertices[3] = sf::Vector2f(0, size);
-
-	m_vertices[0].texCoords = sf::Vector2f(0.f, 0.f);
-	m_vertices[1].texCoords = sf::Vector2f(size, 0.f);
-	m_vertices[2].texCoords = sf::Vector2f(size, size);
-	m_vertices[3].texCoords = sf::Vector2f(0.f, size);
+	m_vertices = Helpers::getVertices(m_vertices, size);
 
 	return true;
 }
@@ -29,12 +21,7 @@ void Enemy::setRandomPos(sf::RenderWindow& window) {
 	rand_xc = dist_x(random);
 
 	if (rand_xc > 0 && rand_xc < window.getSize().x / size - 1) {
-		if (rand_xc % 2 == 0) {
-			rand_pos.y = 0.f;
-		}
-		else {
-			rand_pos.y = (window.getSize().y / size - 1) * size;
-		}
+		rand_xc % 2 == 0 ? rand_pos.y = 0.f : rand_pos.y = (window.getSize().y / size - 1) * size;
 	}
 	else {
 		rand_pos.y = dist_y(random) * size;
@@ -45,7 +32,7 @@ void Enemy::setRandomPos(sf::RenderWindow& window) {
 	pos = rand_pos;
 }
 
-void Enemy::updatePos(sf::Vector2f& player_pos) {
+void Enemy::updatePos(sf::Vector2f player_pos) {
 	x = player_pos.x - pos.x;
 	y = player_pos.y - pos.y;
 
@@ -70,13 +57,9 @@ void Enemy::updatePos(sf::Vector2f& player_pos) {
 	setPosition(pos.x, pos.y);
 }
 
-bool Enemy::isColliding(sf::Vector2f& projectile_pos) {
-	if (pos.x < projectile_pos.x + size && pos.x + size > projectile_pos.x &&
-		pos.y < projectile_pos.y + size && pos.y + size > projectile_pos.y && projectile_pos.x != 0.f) {
-
-		return true;
-	}
-	return false;
+bool Enemy::isColliding(sf::Vector2f projectile_pos) {
+		return pos.x < projectile_pos.x + size && pos.x + size > projectile_pos.x &&
+		pos.y < projectile_pos.y + size && pos.y + size > projectile_pos.y && projectile_pos.x != 0.f;
 }
 
 void Enemy::draw(sf::RenderTarget& target, sf::RenderStates states) const {

@@ -10,12 +10,9 @@ Game::Game() {
 }
 
 bool Game::loadTextures() {
-	if (map.load("art/tileset.png", sf::Vector2u(64, 64), map_pattern, 20, 12) &&
-		player.load("art/player.png") && enemy.load("art/enemy.png") &&
-		projectile.load("art/projectile.png", player.get_pos())) {
-		return true;
-	}
-	return false;
+	return map.load("art/tileset.png", sf::Vector2u(64, 64), map_pattern, 20, 12) &&
+	player.load("art/player.png") && enemy.load("art/enemy.png") &&
+	projectile.load("art/projectile.png");
 }
 
 void Game::loop() {
@@ -54,7 +51,9 @@ void Game::render() {
 	}
 
 	for (unsigned int i = 0; i < projectiles.size(); i++) {
-		projectiles.at(i).updatePos();
+		if (projectiles.at(i).isShot()) {
+			projectiles.at(i).shoot();
+		}
 		window.draw(projectiles.at(i));
 		i_counter = i;
 	}

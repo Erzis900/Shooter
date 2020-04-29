@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
 Player::Player() {
-	setOrigin(width / 2, height / 2);
+	setOrigin(size / 2, size / 2);
 	pos.x = 640.f;
 	pos.y = 384.f;
 }
@@ -14,15 +14,7 @@ bool Player::load(const std::string& tileset_dir) {
 	m_vertices.setPrimitiveType(sf::Quads);
 	m_vertices.resize(4);
 
-	m_vertices[0] = sf::Vector2f(0, 0);
-	m_vertices[1] = sf::Vector2f(width, 0.f);
-	m_vertices[2] = sf::Vector2f(width, height);
-	m_vertices[3] = sf::Vector2f(0, height);
-
-	m_vertices[0].texCoords = sf::Vector2f(0.f, 0.f);
-	m_vertices[1].texCoords = sf::Vector2f(width, 0.f);
-	m_vertices[2].texCoords = sf::Vector2f(width, height);
-	m_vertices[3].texCoords = sf::Vector2f(0.f, height);
+	m_vertices = Helpers::getVertices(m_vertices, size);
 
 	move();
 
@@ -47,10 +39,10 @@ void Player::move() {
 }
 
 void Player::checkWallCollision(const unsigned int& screen_width, const unsigned int& screen_height) {
-	if (pos.x < width / 2) pos.x = width / 2;
-	if (pos.x > screen_width - width / 2) pos.x = screen_width - width / 2;
-	if (pos.y < height / 2) pos.y = height / 2;
-	if (pos.y > screen_height - height / 2) pos.y = screen_height - height / 2;
+	if (pos.x < size / 2) pos.x = size / 2;
+	if (pos.x > screen_width - size / 2) pos.x = screen_width - size / 2;
+	if (pos.y < size / 2) pos.y = size / 2;
+	if (pos.y > screen_height - size / 2) pos.y = screen_height - size / 2;
 }
 
 float Player::getAngle(sf::RenderWindow& window) {
