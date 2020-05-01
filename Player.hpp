@@ -9,6 +9,7 @@ public:
 
 	void move();
 	void checkWallCollision(const unsigned int& screen_width, const unsigned int& screen_height);
+	bool isColliding(sf::Vector2f enemy_pos);
 	float getAngle(sf::RenderWindow& window);
 
 	sf::Vector2f get_pos() {

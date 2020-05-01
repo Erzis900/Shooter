@@ -45,6 +45,11 @@ void Player::checkWallCollision(const unsigned int& screen_width, const unsigned
 	if (pos.y > screen_height - size / 2) pos.y = screen_height - size / 2;
 }
 
+bool Player::isColliding(sf::Vector2f enemy_pos) {
+	return pos.x < enemy_pos.x + size && pos.x + size > enemy_pos.x &&
+	pos.y < enemy_pos.y + size && pos.y + size > enemy_pos.y;
+}
+
 float Player::getAngle(sf::RenderWindow& window) {
 	x = sf::Mouse::getPosition(window).x - pos.x;
 	y = sf::Mouse::getPosition(window).y - pos.y;

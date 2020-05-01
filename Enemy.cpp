@@ -44,15 +44,7 @@ void Enemy::updatePos(sf::Vector2f player_pos) {
 	pos.x += vel.x;
 	pos.y += vel.y;
 
-	m_vertices[0] = sf::Vector2f(0, 0);
-	m_vertices[1] = sf::Vector2f(size, 0.f);
-	m_vertices[2] = sf::Vector2f(size, size);
-	m_vertices[3] = sf::Vector2f(0.f, size);
-
-	m_vertices[0].texCoords = sf::Vector2f(0.f, 0.f);
-	m_vertices[1].texCoords = sf::Vector2f(size, 0.f);
-	m_vertices[2].texCoords = sf::Vector2f(size, size);
-	m_vertices[3].texCoords = sf::Vector2f(0.f, size);
+	m_vertices = Helpers::getVertices(m_vertices, size);
 
 	setPosition(pos.x, pos.y);
 }

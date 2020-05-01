@@ -64,6 +64,10 @@ void Game::render() {
 
 			window.draw(enemies.at(j));
 
+			if (player.isColliding(enemies.at(j).get_pos())) {
+				window.close();
+			}
+
 			if (enemies.at(j).isColliding(projectiles.at(i_counter).get_pos())) {
 				enemies.at(j).setAlive(false);
 				isAlive = false;
@@ -71,19 +75,26 @@ void Game::render() {
 
 			elapsed = clock.getElapsedTime();		
 
-			if (!isAlive || static_cast<int>(elapsed.asSeconds()) % 4 == 0 && static_cast<int>(elapsed.asSeconds()) != 0) {
+			if (!isAlive) {
+				enemies.at(j) = enemy;
+
+				enemies.at(j).setAlive(true);
+				enemies.at(j).setRandomPos(window);
+
+				isAlive = true;
+			}
+
+			if (static_cast<int>(elapsed.asSeconds()) % 4 == 0 && static_cast<int>(elapsed.asSeconds()) != 0) {
 				if (isAlive) {
 					clock.restart();
 				}
 
-				Enemy new_enemy = enemies.at(j);
+				Enemy new_enemy = enemy;
 
 				new_enemy.setAlive(true);
 				new_enemy.setRandomPos(window);
 
 				enemies.push_back(new_enemy);
-
-				isAlive = true;
 			}
 		}
 	}

@@ -32,7 +32,7 @@ private:
 
 	float size = 64.f;
 
-	float velocity = 3.f;
+	float velocity = 5.f;
 
 	float x, y, magnitude;
 
